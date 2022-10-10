@@ -13,9 +13,8 @@ import (
 // func contactHandler(w http.ResponseWriter, r *http.Request) {	
 // 	http.ServeFile(w, r, "./contact.html")
 // }
-type Router struct {}
 
-func (router Router) ServerHTTP(w http.ResponseWriter, r *http.Request) {
+func SelectHandler(w http.ResponseWriter, r *http.Request) {
 	path := r.URL.Path
 	switch path {
 	case "/":
@@ -24,14 +23,15 @@ func (router Router) ServerHTTP(w http.ResponseWriter, r *http.Request) {
 		path = "contact.html"
 	case "/faq":
 		path = "faq.html"
-	default:
-		
 	}	
 	http.ServeFile(w, r, "./"+path)
 }
 
 func main() {
-	var router Router
+	r := chi.NewRouter()
+	r.Get("/", SelectHandler)
+	r.Get("/contact", SelectHandler)
+	r.Get("/faq", SelectHandler)
 	fmt.Println("Starting the server on :3000...")
-	http.ListenAndServe(":3000", router)
+	http.ListenAndServe(":3000", r)
 }
