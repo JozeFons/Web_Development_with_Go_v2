@@ -8,10 +8,7 @@ import (
 type User struct {
 	Name string
 	Bio string
-}
-
-type UserMeta struct {
-	Visits int
+	Age int
 }
 
 func main() {
@@ -23,6 +20,7 @@ func main() {
 	user := User {
 		Name: "Joe",
 		Bio: `<script>alert("Haha, you have been hacked!");</script>`,
+		Age: 38,
 	}
 
 	err = t.Execute(os.Stdout, user)
