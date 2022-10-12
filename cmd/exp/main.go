@@ -20,7 +20,7 @@ func main() {
 	user := User {
 		Name: "Joe",
 		Bio: `<script>alert("Haha, you have been hacked!");</script>`,
-		Age: 38,
+		Age: 38, 
 	}
 
 	err = t.Execute(os.Stdout, user)
