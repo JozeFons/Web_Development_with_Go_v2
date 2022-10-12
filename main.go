@@ -42,7 +42,7 @@ func SelectHandler(w http.ResponseWriter, r *http.Request) {
 	case "/contact":
 		path = "contact.gohtml"
 	case "/faq":
-		path = "faq.html"
+		path = "faq.gohtml"
 	default:
 		path = "page_not_found.gohtml"
 	}
