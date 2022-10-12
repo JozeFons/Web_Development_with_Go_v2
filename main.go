@@ -40,7 +40,7 @@ func SelectHandler(w http.ResponseWriter, r *http.Request) {
 	case "/":
 		path = "home.gohtml"
 	case "/contact":
-		path = "contact.html"
+		path = "contact.gohtml"
 	case "/faq":
 		path = "faq.html"
 	default:
