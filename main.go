@@ -42,7 +42,7 @@ func SelectHandler(w http.ResponseWriter, r *http.Request) {
 	case "/faq":
 		path = "faq.gohtml"
 	default:
-		path = "page_not_found.gohtml"
+		//wrong page index
 	}
 	
 	t, err := views.Parse(path)
