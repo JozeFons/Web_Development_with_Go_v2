@@ -51,8 +51,8 @@ func main() {
 	r.Get("/", SelectHandler)
 	r.Get("/contact", SelectHandler)
 	r.Get("/faq", SelectHandler)
-	s := http.FileServer(http.Dir(""))
-	r.Handle("/*", http.StripPrefix("", s))
+	css := http.FileServer(http.Dir(""))
+	r.Handle("/*", http.StripPrefix("", css))
 	fmt.Println("Starting the server on :3000...")
 	http.ListenAndServe(":3000", r)
 }
