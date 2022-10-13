@@ -5,6 +5,7 @@ import (
 	"log"
 	"net/http"
 	"github.com/go-chi/chi/v5"
+	"github.com/JozeFons/Web_Development_with_Go_v2/views"
 )
 
 // func homeHandler(w http.ResponseWriter, r *http.Request) {
