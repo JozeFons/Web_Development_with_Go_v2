@@ -8,14 +8,6 @@ import (
 	"github.com/go-chi/chi/v5"
 )
 
-// func homeHandler(w http.ResponseWriter, r *http.Request) {
-// 	http.ServeFile(w, r, "./home.html")
-// }
-
-// func contactHandler(w http.ResponseWriter, r *http.Request) {
-// 	http.ServeFile(w, r, "./contact.html")
-// }
-
 // func SelectHandler(w http.ResponseWriter, r *http.Request) {
 // 	path := r.URL.Path
 // 	switch path {
