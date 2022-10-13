@@ -1,11 +1,11 @@
 package main
 
 import (
-	"github.com/JozeFons/Web_Development_with_Go_v2/tree/main/views"
 	"fmt"
 	"log"
 	"net/http"
 	"github.com/go-chi/chi/v5"
+	"github.com/JozeFons/Web_Development_with_Go_v2/views"
 )
 
 // func SelectHandler(w http.ResponseWriter, r *http.Request) {
@@ -51,9 +51,8 @@ func main() {
 	r.Get("/", SelectHandler)
 	r.Get("/contact", SelectHandler)
 	r.Get("/faq", SelectHandler)
-	r.Get("/page_not_found", SelectHandler)
-	// s := http.FileServer(http.Dir(""))
-	// r.Handle("/*", http.StripPrefix("", s))
+	s := http.FileServer(http.Dir(""))
+	r.Handle("/*", http.StripPrefix("", s))
 	fmt.Println("Starting the server on :3000...")
 	http.ListenAndServe(":3000", r)
 }

@@ -1,4 +1,4 @@
-package template
+package views
 
 import (
 	"fmt"
@@ -10,7 +10,7 @@ import (
 
 func Parse(file string) (Template, error) {
 
-	path := filepath.Join("../templates", file)
+	path := filepath.Join("templates", file)
 	tpl, err := template.ParseFiles(path)
 	if err != nil {
 		return Template{}, fmt.Errorf("parsing template: %v", err)
