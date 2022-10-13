@@ -2,11 +2,8 @@ package main
 
 import (
 	"fmt"
-	"html/template"
 	"log"
 	"net/http"
-	"path/filepath"
-
 	"github.com/go-chi/chi/v5"
 )
 
@@ -47,22 +44,13 @@ func SelectHandler(w http.ResponseWriter, r *http.Request) {
 		path = "page_not_found.gohtml"
 	}
 	
-	path = filepath.Join("templates", path)
-	tpl, err := template.ParseFiles(path)
+	t, err := views.Parse(path)
 	if err != nil {
 		log.Printf("Parsing template: %v", err)
 		http.Error(w, "There was an error parsing the template!", http.StatusInternalServerError)
 		return
 	}
-	err = tpl.Execute(w,nil)
-	if err != nil{
-		log.Printf("Executing template: %v", err)
-		http.Error(w, "There was an error on executing the template!", http.StatusInternalServerError)
-		return
-	}
 }
-
-
 
 func main() {
 	r := chi.NewRouter()
