@@ -1,11 +1,11 @@
 package main
 
 import (
+	"github.com/JozeFons/Web_Development_with_Go_v2/tree/main/views"
 	"fmt"
 	"log"
 	"net/http"
 	"github.com/go-chi/chi/v5"
-	"Web_Development_with_Go_v2/views"
 )
 
 // func homeHandler(w http.ResponseWriter, r *http.Request) {
@@ -51,6 +51,7 @@ func SelectHandler(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "There was an error parsing the template!", http.StatusInternalServerError)
 		return
 	}
+	t.Execute(w, nil)
 }
 
 func main() {

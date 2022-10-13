@@ -1,4 +1,4 @@
-module Web_Development_with_Go_v2
+module github.com/JozeFons/Web_Development_with_Go_v2
 
 go 1.19
 
