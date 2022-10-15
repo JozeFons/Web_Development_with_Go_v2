@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"html/template"
 	"net/http"
 	"github.com/JozeFons/Web_Development_with_Go_v2/views"
 )
@@ -15,7 +16,7 @@ func StaticHandler(tpl views.Template) http.HandlerFunc {
 func FAQ(tpl views.Template) http.HandlerFunc {
 	questions := []struct {
 		Question string
-		Answer string
+		Answer template.HTML
 	}{
 		{
 			Question: "Is there a free version?",

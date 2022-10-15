@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"net/http"
 	"github.com/JozeFons/Web_Development_with_Go_v2/controllers"
+	"github.com/JozeFons/Web_Development_with_Go_v2/templates"
+	"github.com/JozeFons/Web_Development_with_Go_v2/views"
 	"github.com/go-chi/chi/v5"
 )
 
@@ -48,11 +50,12 @@ import (
 func main() {
 	r := chi.NewRouter()
 
-	tpl := controllers.SelectHandler()
+	r.Get("/", controllers.StaticHandler(views.Must(views.ParseFS(templates.FS, "layout-page.gohtml", "home.gohtml"))))
 
-	r.Get("/", controllers.StaticHandler(tpl))
-	r.Get("/contact", controllers.StaticHandler(tpl))
-	r.Get("/faq", controllers.StaticHandler(tpl))
+	// r.Get("/", controllers.StaticHandler(views.Must(views.ParseFS(templates.FS, "layout-page.gohtml", "contact.gohtml"))))
+
+	// r.Get("/", controllers.StaticHandler(views.Must(views.ParseFS(templates.FS, "layout-page.gohtml", "faq.gohtml"))))
+	
 	css := http.FileServer(http.Dir(""))
 	r.Handle("/*", http.StripPrefix("", css))
 	fmt.Println("Starting the server on :3000...")
