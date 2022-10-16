@@ -1,25 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles.css">
-    <title>Faq</title>
-</head>
-<body>
-    <h1>FAQ Page</h1>
-    <ul>
-        {{range .}}
-            {{template "qa" .}}
-        {{end}}
-    </ul>
-</body>
-</html>
-
-{{define "qa"}}
-<li>
-    <p>{{.Question}}</p>
-    <p>{{.Answer}}</p>
-</li>
-{{end}}
+{{template "head" .}}
+{{template "title_faq" .}}
+{{template "body" .}}
+{{template "header_faq" .}} 
+{{template "qa" .}}
+{{template "footer" .}}

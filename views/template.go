@@ -6,7 +6,6 @@ import (
 	"io/fs"
 	"log"
 	"net/http"
-	"path/filepath"
 )
 
 func Must(t Template, err error) Template {
@@ -21,18 +20,6 @@ func ParseFS(fs fs.FS, patterns ...string) (Template, error) {
 	tpl, err := template.ParseFS(fs, patterns...)
 	if err != nil {
 		return Template{}, fmt.Errorf("parsing template: %w", err)
-	}
-	return Template{
-		htmlTpl: tpl,
-	},nil	
-}
-
-func Parse(file string) (Template, error) {
-
-	path := filepath.Join("templates", file)
-	tpl, err := template.ParseFiles(path)
-	if err != nil {
-		return Template{}, fmt.Errorf("parsing template: %v", err)
 	}
 	return Template{
 		htmlTpl: tpl,
