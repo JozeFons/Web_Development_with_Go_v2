@@ -2,7 +2,7 @@
 
 Frontend - HTML, Tailwind CSS
 
-Backend - Go
+Backend - Go(chi router)
 
 Rest API - Dropbox
 
