@@ -1,6 +1,4 @@
-# Web_Development_with_Go_v2
-
-Web Development
+# Web Development with Go v2
 
 Frontend - HTML, Tailwind CSS
 
