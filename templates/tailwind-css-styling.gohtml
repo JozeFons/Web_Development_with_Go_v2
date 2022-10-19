@@ -1,31 +1,33 @@
 {{define "head"}}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://cdn.tailwindcss.com"></script>
-    {{/* <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            clifford: '#da373d',
-          }
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="https://cdn.tailwindcss.com"></script>
+        {{/* <script>
+        tailwind.config = {
+        theme: {
+            extend: {
+            colors: {
+                clifford: '#da373d',
+            }
+            }
         }
-      }
-    }
+        }
   </script> */}}
 {{end}}
+
 {{define "body"}}
-</head>
-<body>
-{{template "header" .}}
+    </head>
+    <body class="min-h-screen bg-gray-100">
+    {{template "header" .}}
 {{end}}
+
 {{define "footer"}}  
-</body>
-</html>
+    </body>
+    </html>
 {{end}}
 
 
@@ -41,24 +43,34 @@
     <title>Faq</title>
 {{end}}
 
+{{define "title_signup"}}
+    <title>Signup</title>
+{{end}}
+
 {{define "header"}}
-    <header class="bg-gradient-to-r from-blue-800 to-indigo-800 text-white">
-        <nav class="px-8 py-6 flex items-center space-x-12">
-        <div class="text-4xl font-serif">Logo</div>
+    <header class="bg-gradient-to-r from-blue-500 via-purple-700 to-indigo-900 hover:from-pink-500 hover:via-purple-700 hover:to-indigo-900 text-white">
+        {{/* <div class="relative h-32 w-32">
+            <div class="absolute h-14 w-14 -left-4 -top-4 items-center space-x-12 text-4xl font-serif">hi</div>
+        </div> */}}
+        <nav class="mt-10 px-5 py-2 flex items-center space-x-4">
+        {{/* <div class="relative h-10">
+            <div class="absolute -top-10 px-10 py-10 text-2xl font-serif bg-gradient-to-r from-blue-300 to-indigo-500 rounded-r-full">Logo</div>
+        </div> */}}
+        <div class="-mt-12 -mb-12 text-4xl text-yellow-300 font-serif pr-5 py-12 bg-gradient-to-r from-transparent via-transparent to-indigo-300 hover:from-transparent hover:via-transparent hover:to-purple-300 rounded-full">Navalon</div>
         <div class="flex-grow">
-            <a class="text-lg font-semibold hover:text-blue-100 pr-8" href="/">
+            <a class="text-lg font-semibold hover:text-indigo-200 pr-5" href="/">
             Home
             </a>
-            <a class="text-lg font-semibold hover:text-blue-100 pr-8" href="/contact">
+            <a class="text-lg font-semibold hover:text-indigo-200 pr-5" href="/contact">
             Contact
             </a>
-            <a class="text-lg font-semibold hover:text-blue-100 pr-8" href="/faq">
+            <a class="text-lg font-semibold hover:text-indigo-200 pr-5" href="/faq">
             FAQ
             </a>
         </div>
-        <div class="space-x-4">
-            <a href="#">Sign in</a>
-            <a href="#" class="px-4 py-2 bg-blue-700 hover:bg-blue-600 rounded">
+        <div class="items-center flex">
+            <a href="#" class="hover:text-indigo-200 pr-5">Sign in</a>
+            <a href="/signup" class="px-4 py-1 bg-gradient-to-r from-blue-500 via-purple-700 to-indigo-900 hover:from-pink-500 hover:via-purple-700 hover:to-indigo-900 rounded-full">
             Sign up
             </a>
         </div>
@@ -66,22 +78,78 @@
     </header>
 {{end}}
 
-{{define "header_home"}}
-     <h1 class="px-6 text-3xl font-bold">Welcome to my awesome site!</h1>
+{{define "body_home"}}
+     <h1 class="py-10 px-6 text-3xl font-bold">Welcome to my awesome site!</h1>
 {{end}}
 
-{{define "header_contact"}}
+{{define "body_contact"}}
     <div class="px-6">
-        <h1 class="py-4 text-4xl semibold tracking-tight">Contact page</h1>
+        <h1 class="py-6 text-4xl semibold tracking-tight">Contact page</h1>
         <p class="text-gray-500">To get in touch , email me at <a href="mailto:jf399@protonmail.com" class="mt-1 text-lg leading-tight font-medium text-blue-600 hover:underline">My email</a></p>
     </div>
 {{end}}
 
-{{define "header_faq"}}
-    <h1 class="px-6 py-4 text-4xl semibold tracking-tight">FAQ Page</h1>
+{{define "body_faq"}}
+    <h1 class="px-6 py-6 text-4xl semibold tracking-tight">FAQ Page</h1>
 {{end}}
 
-{{define "qa"}}
+{{define "body_signup"}}
+    <div class="py-10 flex justify-center">
+        <div class="px-8 py-8 bg-white rounded shadow">
+            <h1 class="pt-4 pb-8 text-center text-3xl font-bold text-gray-900">
+            Sign up to your account
+            </h1>
+            <form action="/signup" method="post">
+            <div class="py-2">
+                <label for="email" class="text-sm font-semibold text-gray-800">
+                Email Address
+                </label>
+                <input
+                name="email"
+                id="email"
+                type="email"
+                placeholder="Email address"
+                required
+                autocomplete="email"
+                class="w-full px-3 py-2 border border-gray-300 placeholder-gray-500
+                    text-gray-800 rounded"
+                />
+            </div>
+            <div class="py-2">
+                <label for="password" class="text-sm font-semibold text-gray-800">
+                Password
+                </label>
+                <input
+                name="password"
+                id="password"
+                type="password"
+                placeholder="Password"
+                required
+                class="w-full px-3 py-2 border border-gray-300 placeholder-gray-500
+                    text-gray-800 rounded"
+                />
+            </div>
+            <div class="py-4">
+                <button class="w-full py-4 px-2 bg-gradient-to-r from-blue-500 via-purple-700 to-indigo-900 hover:from-pink-500 hover:via-purple-700 hover:to-indigo-900
+                text-white rounded font-bold text-lg">
+                Sign up
+                </button>
+            </div>
+            <div class="py-2 w-full flex justify-between">
+                <p class="text-xs text-gray-500">
+                Already have an account?
+                <a href="/signin" class="underline">Sign in</a>
+                </p>
+                <p class="text-xs text-gray-500">
+                <a href="/reset-pw" class="underline">Forgot your password?</a>
+                </p>
+            </div>
+            </form>
+        </div>
+    </div>
+{{end}}
+
+{{define "body_faq_qa"}}
     <ul class="grid grid-cols-2 gap-16 px-6">
         <li class="border-t border-indigo-400 py-1 px-2">
             <span class="block tex-lg text-gray-800 semibold">Is there a free version?</span>
