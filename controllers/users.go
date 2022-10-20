@@ -2,12 +2,11 @@ package controllers
 
 import (
 	"net/http"
-	"github.com/JozeFons/Web_Development_with_Go_v2/views"
 )
 
 type Users struct {
 	Templates struct {
-		New views.Template
+		New Template
 	}
 }
 

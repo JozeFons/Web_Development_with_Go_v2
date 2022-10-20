@@ -2,12 +2,11 @@ package controllers
 
 import (
 	"net/http"
-	"github.com/JozeFons/Web_Development_with_Go_v2/views"
 )
 
-func StaticHandler(tpl views.Template) http.HandlerFunc {
+func StaticHandler(tpl Template) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		
+
 		tpl.Execute(w, nil)
 	}
 }
