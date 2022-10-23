@@ -6,4 +6,4 @@ Backend - Go(chi router)
 
 Rest API - Dropbox
 
-Database - Postgresql
+Database - Postgresql/Adminer
