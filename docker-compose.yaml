@@ -1,7 +1,7 @@
 version: "3.9"
 
 services:
-  # Our Postgres database
+  # Postgres database data
   db: # The service will be named db.
     image: postgres # The postgres image will be used
     restart: always # Always try to restart if this stops running
@@ -10,7 +10,7 @@ services:
       POSTGRES_PASSWORD: gowebdevelopment
       POSTGRES_DB: gowebv2
     ports: # Expose ports so that apps not running via docker compose can connect to them.
-      - 5432:5432 # format here is "port on our machine":"port on container"
+      - 5433:5433 # format here is "port on our machine":"port on container"
 
   # Adminer provides a nice little web UI to connect to databases
   adminer:
