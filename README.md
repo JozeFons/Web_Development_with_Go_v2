@@ -2,8 +2,8 @@
 
 Frontend - HTML, Tailwind CSS
 
-Backend - Go(chi router)
+Backend - Go, (chi-router - 3rd. dependency)
 
 Rest API - Dropbox
 
-Database - Postgresql
+Database - Postgresql/Adminer
