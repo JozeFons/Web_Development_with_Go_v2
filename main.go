@@ -1,10 +1,13 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"net/http"
+
 	"github.com/JozeFons/Web_Development_with_Go_v2/controllers"
-	"github.com/JozeFons/Web_Development_with_Go_v2/templates"
+	"github.com/JozeFons/Web_Development_with_Go_v2/models"
+	server "github.com/JozeFons/Web_Development_with_Go_v2/templates"
 	"github.com/JozeFons/Web_Development_with_Go_v2/views"
 	"github.com/go-chi/chi/v5"
 )
@@ -52,23 +55,58 @@ func main() {
 
 	r.Get("/", controllers.StaticHandler(views.Must(views.ParseFS(server.FS, "home.gohtml", "tailwind-css-styling.gohtml"))))
 
-	r.Get("/contact", controllers.StaticHandler(views.Must(views.ParseFS(server.FS,"contact.gohtml", "tailwind-css-styling.gohtml"))))
+	r.Get("/contact", controllers.StaticHandler(views.Must(views.ParseFS(server.FS, "contact.gohtml", "tailwind-css-styling.gohtml"))))
 
 	r.Get("/faq", controllers.StaticHandler(views.Must(views.ParseFS(server.FS, "faq.gohtml", "tailwind-css-styling.gohtml"))))
-	
-	users := controllers.Users{}
-	users.Templates.New = views.Must(views.ParseFS(server.FS, "signup.gohtml", "tailwind-css-styling.gohtml"))
-	r.Get("/signup", users.New)
-	r.Post("/users", users.Create)
-	
+
+	// Setup database connection
+	cfg := models.DefaultPostgresConfig()
+	db, err := models.Open(cfg)
+	if err != nil {
+		panic(err)
+	}
+	defer db.Close()
+
+	err = db.Ping()
+	if err != nil {
+		panic(err)
+	}
+	fmt.Println("Connected!")
+
+	_, err = db.Exec(`
+		CREATE TABLE IF NOT EXISTS users (
+		id SERIAL PRIMARY KEY,
+		email TEXT UNIQUE NOT NULL,
+		password_hash TEXT NOT NULL
+		);
+	`)
+	if err != nil {
+		panic(err)
+	}
+	fmt.Println("Table created!")
+
+	// Setup our model services
+	userService := models.UserService{
+		DB: db,
+	}
+
+	// Setup our controllers
+	usersC := controllers.Users{
+		UserService: &userService,
+	}
+	usersC.Templates.New = views.Must(views.ParseFS(server.FS, "signup.gohtml", "tailwind-css-styling.gohtml"))
+
+	usersC.Templates.SignIn = views.Must(views.ParseFS(server.FS, "signin.gohtml", "tailwind-css-styling.gohtml"))
+	r.Get("/signup", usersC.New)
+	r.Post("/users", usersC.Create)
+	r.Get("/signin", usersC.SignIn)
+	r.Post("/signin", usersC.ProcessSignIn)
+
 	r.NotFound(func(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "404 Page not found", http.StatusNotFound)
 	})
 	// css := http.FileServer(http.Dir(""))
 	// r.Handle("/*", http.StripPrefix("", css))
 	log.Printf("Starting the server on :3000...")
-	err := http.ListenAndServe(":3000", r)
-	if err != nil {
-		log.Fatal(err)
-	}
+	http.ListenAndServe(":3000", r)
 }

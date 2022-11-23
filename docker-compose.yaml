@@ -10,7 +10,7 @@ services:
       POSTGRES_PASSWORD: gowebdevelopment
       POSTGRES_DB: gowebv2
     ports: # Expose ports so that apps not running via docker compose can connect to them.
-      - 5433:5433 # format here is "port on our machine":"port on container"
+      - 5433:5432 # format here is "port on our machine":"port on container"
 
   # Adminer provides a nice little web UI to connect to databases
   adminer:
