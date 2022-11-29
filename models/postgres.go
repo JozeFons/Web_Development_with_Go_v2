@@ -3,12 +3,13 @@ package models
 import (
 	"database/sql"
 	"fmt"
+
 	_ "github.com/jackc/pgx/v5/stdlib"
 )
 
 // Open will open a SQL connection with the provided
 // Postgres database. Callers of Open need ton ensure
-// that the connection is eventually closed via the 
+// that the connection is eventually closed via the
 // db.Close() method.
 func Open(config PostgresConfig) (*sql.DB, error) {
 	db, err := sql.Open("pgx", config.String())

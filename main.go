@@ -62,15 +62,11 @@ func main() {
 	// Setup database connection
 	cfg := models.DefaultPostgresConfig()
 	db, err := models.Open(cfg)
-	if err != nil {
-		panic(err)
-	}
+	controllers.CheckError(err)
 	defer db.Close()
 
 	err = db.Ping()
-	if err != nil {
-		panic(err)
-	}
+	controllers.CheckError(err)
 	fmt.Println("Connected!")
 
 	_, err = db.Exec(`
@@ -80,9 +76,7 @@ func main() {
 		password_hash TEXT NOT NULL
 		);
 	`)
-	if err != nil {
-		panic(err)
-	}
+	controllers.CheckError(err)
 	fmt.Println("Table created!")
 
 	// Setup our model services
@@ -97,10 +91,15 @@ func main() {
 	usersC.Templates.New = views.Must(views.ParseFS(server.FS, "signup.gohtml", "tailwind-css-styling.gohtml"))
 
 	usersC.Templates.SignIn = views.Must(views.ParseFS(server.FS, "signin.gohtml", "tailwind-css-styling.gohtml"))
+	
+	usersC.Templates.PwReset = views.Must(views.ParseFS(server.FS, "password_reset.gohtml", "tailwind-css-styling.gohtml"))
+	
 	r.Get("/signup", usersC.New)
 	r.Post("/users", usersC.Create)
 	r.Get("/signin", usersC.SignIn)
 	r.Post("/signin", usersC.ProcessSignIn)
+	r.Get("/pw_reset", usersC.PwReset)
+	r.Get("/users/id", usersC.CurrentUser)
 
 	r.NotFound(func(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "404 Page not found", http.StatusNotFound)
@@ -108,5 +107,6 @@ func main() {
 	// css := http.FileServer(http.Dir(""))
 	// r.Handle("/*", http.StripPrefix("", css))
 	log.Printf("Starting the server on :3000...")
-	http.ListenAndServe(":3000", r)
+	err = http.ListenAndServe(":3000", r)
+	controllers.CheckError(err)
 }

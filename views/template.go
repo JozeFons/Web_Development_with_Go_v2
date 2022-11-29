@@ -6,12 +6,12 @@ import (
 	"io/fs"
 	"log"
 	"net/http"
+
+	"github.com/JozeFons/Web_Development_with_Go_v2/controllers"
 )
 
 func Must(t Template, err error) Template {
-	if err != nil {
-		panic(err)
-	}
+	controllers.CheckError(err)
 	return t
 }
 
@@ -23,7 +23,7 @@ func ParseFS(fs fs.FS, patterns ...string) (Template, error) {
 	}
 	return Template{
 		htmlTpl: tpl,
-	},nil	
+	}, nil
 }
 
 type Template struct {

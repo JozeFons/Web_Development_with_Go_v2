@@ -9,8 +9,9 @@ import (
 
 type Users struct {
 	Templates struct {
-		New Template
-		SignIn Template
+		New     Template
+		SignIn  Template
+		PwReset Template
 	}
 	UserService *models.UserService
 }
@@ -27,8 +28,8 @@ func (u Users) Create(w http.ResponseWriter, r *http.Request) {
 	email := r.FormValue("email")
 	password := r.FormValue("password")
 	user, err := u.UserService.Create(email, password)
-	if err != nil{
-		fmt.Println(err)
+	if err != nil {
+		CheckError(err)
 		http.Error(w, "Something went wrong.", http.StatusInternalServerError)
 		return
 	}
@@ -45,16 +46,39 @@ func (u Users) SignIn(w http.ResponseWriter, r *http.Request) {
 
 func (u Users) ProcessSignIn(w http.ResponseWriter, r *http.Request) {
 	var data struct {
-		Email string
+		Email    string
 		Password string
 	}
 	data.Email = r.FormValue("email")
 	data.Password = r.FormValue("password")
 	user, err := u.UserService.Authenticate(data.Email, data.Password)
 	if err != nil {
-		fmt.Println(err)
+		CheckError(err)
 		http.Error(w, "Something went wrong.", http.StatusInternalServerError)
 		return
 	}
+	cookie := http.Cookie{
+		Name:  "email",
+		Value: user.Email,
+		Path:  "/",
+	}
+	http.SetCookie(w, &cookie)
 	fmt.Fprintf(w, "User authenticated: %+v", user)
+}
+
+func (u Users) PwReset(w http.ResponseWriter, r *http.Request) {
+	var data struct {
+		Email string
+	}
+	data.Email = r.FormValue("email")
+	u.Templates.PwReset.Execute(w, data)
+}
+
+func (u Users) CurrentUser(w http.ResponseWriter, r *http.Request) {
+	email, err := r.Cookie("email")
+	if err != nil {
+		fmt.Fprint(w, "The email cookie could not be read.")
+		return
+	}
+	fmt. Fprintf(w, "Email cookie: %s\n", email.Value)
 }

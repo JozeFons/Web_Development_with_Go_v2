@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"fmt"
 	"net/http"
 )
 
@@ -8,6 +9,12 @@ func StaticHandler(tpl Template) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 
 		tpl.Execute(w, nil)
+	}
+}
+
+func CheckError(err error) {
+	if err != nil {
+		fmt.Println(err.Error())
 	}
 }
 
