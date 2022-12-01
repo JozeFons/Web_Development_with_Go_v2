@@ -9,7 +9,10 @@ require (
 )
 
 require (
+	github.com/gorilla/csrf v1.7.1 // indirect
+	github.com/gorilla/securecookie v1.1.1 // indirect
 	github.com/jackc/pgpassfile v1.0.0 // indirect
 	github.com/jackc/pgservicefile v0.0.0-20200714003250-2b9c44734f2b // indirect
+	github.com/pkg/errors v0.9.1 // indirect
 	golang.org/x/text v0.3.8 // indirect
 )

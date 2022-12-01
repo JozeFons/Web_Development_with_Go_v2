@@ -10,6 +10,7 @@ import (
 	server "github.com/JozeFons/Web_Development_with_Go_v2/templates"
 	"github.com/JozeFons/Web_Development_with_Go_v2/views"
 	"github.com/go-chi/chi/v5"
+	"github.com/gorilla/csrf"
 )
 
 // func SelectHandler(w http.ResponseWriter, r *http.Request) {
@@ -107,6 +108,11 @@ func main() {
 	// css := http.FileServer(http.Dir(""))
 	// r.Handle("/*", http.StripPrefix("", css))
 	log.Printf("Starting the server on :3000...")
-	err = http.ListenAndServe(":3000", r)
+	csrfKey := "gFvi45R4fy5xNBlnEeZtQbfAVCYEIAUX"
+	csrfMw := csrf.Protect(
+		[]byte(csrfKey),
+		csrf.Secure(false),
+	)
+	err = http.ListenAndServe(":3000", csrfMw(r))
 	controllers.CheckError(err)
 }
