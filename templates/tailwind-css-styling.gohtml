@@ -6,22 +6,23 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <script src="https://cdn.tailwindcss.com"></script>
-        {{/* <script>
-        tailwind.config = {
-        theme: {
-            extend: {
-            colors: {
-                clifford: '#da373d',
+        <script>
+            tailwind.config = {
+                            theme: {
+                                extend: {
+                                backgroundImage: {
+                                    'hero': "url('https://github.com/JozeFons/Web_Development_with_Go_v2/blob/main/templates/backround.jpg')"
+                                    {{/* 'footer-texture': "url('/img/footer-texture.png')", */}}
+                        }
+                    }
+                }
             }
-            }
-        }
-        }
-  </script> */}}
+        </script>
 {{end}}
 
 {{define "body"}}
     </head>
-    <body class="min-h-screen bg-gray-100">
+    <body class="bg-hero">
     {{template "header" .}}
 {{end}}
 
