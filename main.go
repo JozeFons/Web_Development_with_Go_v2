@@ -76,6 +76,12 @@ func main() {
 		email TEXT UNIQUE NOT NULL,
 		password_hash TEXT NOT NULL
 		);
+
+		CREATE TABLE IF NOT EXISTS 	sessions (
+    	id SERIAL PRIMARY KEY,
+    	user_id INT UNIQUE,
+    	token_hash TEXT UNIQUE NOT NULL
+		);
 	`)
 	controllers.CheckError(err)
 	fmt.Println("Table created!")
