@@ -2,6 +2,9 @@ package models
 
 import (
 	"database/sql"
+	"fmt"
+
+	"github.com/JozeFons/Web_Development_with_Go_v2/rand"
 )
 
 // Token is only set when creating a new session. When look up a session
@@ -21,7 +24,16 @@ type SessionService struct {
 func (ss *SessionService) Create(UserID int) (*Session, error) {
 	// 1. Crate the session token
 	// Implement SessionService.Create
-	return nil, nil
+	token, err := rand.SessionToken()
+	if err != nil {
+		return nil, fmt.Errorf("create: %w", err)
+	}
+	session := Session() {
+		UserID: userID,
+		Token: token,
+	}
+
+	return &session, nil
 }
 
 func (ss *SessionService) User(token string) (*User, error) {
