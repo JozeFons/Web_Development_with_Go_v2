@@ -110,6 +110,7 @@ func main() {
 	r.Post("/users", usersC.Create)
 	r.Get("/signin", usersC.SignIn)
 	r.Post("/signin", usersC.ProcessSignIn)
+	r.Post("/signout", usersC.ProcessSignOut)
 	r.Get("/pw_reset", usersC.PwReset)
 	r.Get("/users/id", usersC.CurrentUser)
 
