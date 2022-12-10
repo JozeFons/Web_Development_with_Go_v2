@@ -1,8 +1,12 @@
 package models
 
 import (
+	"bytes"
+	"crypto/sha256"
 	"database/sql"
+	"encoding/base64"
 	"fmt"
+	"go/token"
 
 	"github.com/JozeFons/Web_Development_with_Go_v2/rand"
 )
@@ -39,6 +43,7 @@ func (ss *SessionService) Create(userID int) (*Session, error) {
 	session := Session{
 		UserID: userID,
 		Token:  token,
+		TokenHash: ss.hash(token),
 	}
 
 	return &session, nil
@@ -46,4 +51,9 @@ func (ss *SessionService) Create(userID int) (*Session, error) {
 
 func (ss *SessionService) User(token string) (*User, error) {
 	return nil, nil
+}
+
+func (ss *SessionService) hash(token string) string {
+	tokenHash := sha256.Sum256([]byte(token))
+	return base64.URLEncoding.EncodeToString(tokenHash[:])
 }
