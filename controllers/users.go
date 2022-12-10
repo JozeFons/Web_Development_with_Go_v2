@@ -9,9 +9,10 @@ import (
 
 type Users struct {
 	Templates struct {
-		New     Template
-		SignIn  Template
-		PwReset Template
+		New           Template
+		SignIn        Template
+		ProcessSignIn Template
+		PwReset       Template
 	}
 	UserService    *models.UserService
 	SessionService *models.SessionService
@@ -113,5 +114,5 @@ func (u Users) ProcessSignOut(w http.ResponseWriter, r *http.Request) {
 	}
 	// Delete the user's cookie
 	deleteCookie(w, CookieSession)
-	http.Redirect(w, r, "signin", http.StatusFound)	
+	http.Redirect(w, r, "signin", http.StatusFound)
 }

@@ -58,6 +58,10 @@
     <title>Reset Password</title>
 {{end}}
 
+{{define "title_user_signed"}}
+    <title>Signed In</title>
+{{end}}
+
 {{define "header"}}
     <header class="md:text-lg lg:text-xl bg-gradient-to-r from-blue-500 via-purple-700 to-indigo-900 hover:from-pink-500 hover:via-purple-700 hover:to-indigo-900 text-white">
         {{/* <div class="relative h-32 w-32">
@@ -256,6 +260,36 @@
                 <button class="w-full py-4 px-2 bg-gradient-to-r from-blue-500 via-purple-700 to-indigo-900 hover:from-pink-500 hover:via-purple-700 hover:to-indigo-900
                 text-white rounded font-bold text-lg">  
                     Reset Password
+                </button>
+            </div>
+            <div class="py-2 w-full flex justify-between">
+                <p class="text-xs text-gray-500 pr-5">
+                Need an account?
+                <a href="/signup" class="underline">Sign up</a>
+                </p>
+                <p class="text-xs text-gray-500">Already have an account?
+                <a href="/signin" class="underline">Sign in</a>
+                </p>
+            </div>
+            </form>
+        </div>
+    </div>
+{{end}}
+
+{{define "body_user_signed"}}
+    <div class="py-10 flex justify-center">
+        <div class="px-8 py-8 bg-white rounded shadow">
+            <h1 class="pt-4 pb-8 text-center text-3xl font-bold text-gray-900">
+            Hi, you've signed into Navalon's portal!
+            </h1>
+            <form action="/signout" method="post">
+            <div class="hidden">
+                {{csrfField}}
+            </div>
+            <div class="py-4">
+                <button class="w-full py-4 px-2 bg-gradient-to-r from-blue-500 via-purple-700 to-indigo-900 hover:from-pink-500 hover:via-purple-700 hover:to-indigo-900
+                text-white rounded font-bold text-lg">  
+                    Sign Out
                 </button>
             </div>
             <div class="py-2 w-full flex justify-between">
