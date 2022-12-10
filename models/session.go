@@ -1,12 +1,10 @@
 package models
 
 import (
-	"bytes"
 	"crypto/sha256"
 	"database/sql"
 	"encoding/base64"
 	"fmt"
-	"go/token"
 
 	"github.com/JozeFons/Web_Development_with_Go_v2/rand"
 )
@@ -41,16 +39,26 @@ func (ss *SessionService) Create(userID int) (*Session, error) {
 		return nil, fmt.Errorf("create: %w", err)
 	}
 	session := Session{
-		UserID: userID,
-		Token:  token,
+		UserID:    userID,
+		Token:     token,
 		TokenHash: ss.hash(token),
 	}
 
 	row := ss.DB.QueryRow(`
-	INSERT INTO sessions (user_id, token_hash)
-	VALUES ($1, $2)
-	RETURNING id;`, session.UserID, session.TokenHash)
+		UPDATE sessions
+		WHERE user_id = $1
+		SET token_hash = $2
+		RETURNIG id;`, session.UserID, session.TokenHash)
 	err = row.Scan(&session.ID)
+
+	if err == sql.ErrNoRows {
+		row = ss.DB.QueryRow(`
+			INSERT INTO sessions (user_id, token_hash)
+			VALUES ($1, $2)
+			RETURNING id;`, session.UserID, session.TokenHash)
+		err = row.Scan(&session.ID)
+	}
+
 	if err != nil {
 		return nil, fmt.Errorf("create %w", err)
 	}
