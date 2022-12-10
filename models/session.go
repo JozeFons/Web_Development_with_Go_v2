@@ -46,9 +46,9 @@ func (ss *SessionService) Create(userID int) (*Session, error) {
 
 	row := ss.DB.QueryRow(`
 		UPDATE sessions
-		WHERE user_id = $1
 		SET token_hash = $2
-		RETURNIG id;`, session.UserID, session.TokenHash)
+		WHERE user_id = $1
+		RETURNING id;`, session.UserID, session.TokenHash)
 	err = row.Scan(&session.ID)
 
 	if err == sql.ErrNoRows {
@@ -60,13 +60,32 @@ func (ss *SessionService) Create(userID int) (*Session, error) {
 	}
 
 	if err != nil {
-		return nil, fmt.Errorf("create %w", err)
+		return nil, fmt.Errorf("create: %w", err)
 	}
 	return &session, nil
 }
 
 func (ss *SessionService) User(token string) (*User, error) {
-	return nil, nil
+	tokenHash := ss.hash(token)
+	var user User
+	row := ss.DB.QueryRow(`
+			SELECT user_id 
+			FROM sessions 
+			WHERE token_hash = $1;`, tokenHash)
+	err := row.Scan(&user.ID)
+	if err != nil {
+		return nil, fmt.Errorf("user: %w", err)
+	}
+
+	row = ss.DB.QueryRow(`
+		SELECT email, password_hash
+		FROM users
+		WHERE ID = $1;`, user.ID)
+	err = row.Scan(&user.Email, &user.PasswordHash)
+	if err != nil {
+		return nil, fmt.Errorf("user: %w", err)
+	}
+	return &user, nil
 }
 
 func (ss *SessionService) hash(token string) string {
