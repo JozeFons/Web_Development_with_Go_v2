@@ -72,16 +72,21 @@ func main() {
 
 	_, err = db.Exec(`
 		CREATE TABLE IF NOT EXISTS users (
-		id SERIAL PRIMARY KEY,
-		email TEXT UNIQUE NOT NULL,
-		password_hash TEXT NOT NULL
+			id SERIAL PRIMARY KEY,
+			email TEXT UNIQUE NOT NULL,
+			password_hash TEXT NOT NULL
 		);
 
 		CREATE TABLE IF NOT EXISTS 	sessions (
-    	id SERIAL PRIMARY KEY,
-    	user_id INT UNIQUE,
-    	token_hash TEXT UNIQUE NOT NULL
+    		id SERIAL PRIMARY KEY,
+    		user_id INT UNIQUE REFERENCES users (id),
+    		token_hash TEXT UNIQUE NOT NULL
 		);
+
+		ALTER TABLE sessions
+			ADD CONSTRAINT sessions_user_id_fkey 
+			FOREIGN KEY (user_id) 
+			REFERENCES users (id);
 	`)
 	controllers.CheckError(err)
 	fmt.Println("Table created!")
