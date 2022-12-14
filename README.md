@@ -10,7 +10,7 @@ Database - Postgresql/Adminer
 
 Password encryption - bCrypt
 
-# 3rd. dependencies:
+# 3rd. Dependencies:
 
 Chi router - github.com/go-chi/chi/v5 //v5.0.7
 
